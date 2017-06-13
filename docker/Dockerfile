@@ -10,6 +10,8 @@ COPY DBIx-Class-DeploymentHandler-0.002219.tar.gz /
 RUN /opt/perl5/bin/cpanm /DBIx-Class-DeploymentHandler-0.002219.tar.gz \
     && rm /DBIx-Class-DeploymentHandler-0.002219.tar.gz
 
+RUN /opt/perl5/bin/cpanm DBIx::Class::DeploymentHandler::VersionStorage::WithSchema
+
 COPY entrypoint.pl /
 RUN mkdir /opt/fb11 \
     && useradd --home /opt/fb11 fb11 \
