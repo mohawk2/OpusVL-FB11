@@ -29,13 +29,15 @@ override _build_config => sub
     # .. get the path for this name space..
     my $path = File::ShareDir::module_dir( 'TestApp' );
 
-    # .. point the FB11Auth Model to the correct DB file....
+    # Tests should be run from a clean DB, but if you use this you can inspect
+    # the DB when it goes wrong.
+    my $dbfile = $ENV{FB11_TEST_SQLITE_DB} // ':memory:';
     $config->{'Model::FB11AuthDB'} = 
     {
         schema_class => 'OpusVL::FB11::Schema::FB11AuthDB',
         connect_info =>
-        {   
-            dsn             => 'dbi:SQLite:' . $path . '/root/db/fb11_auth.db',
+        {
+            dsn             => 'dbi:SQLite:dbname=' . $dbfile,
             user            => '',
             password        => '',
             on_connect_call => 'use_foreign_keys',
