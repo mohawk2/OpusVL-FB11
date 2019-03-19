@@ -22,20 +22,20 @@ my %option = (
     'use-moduledir' => 1,
 );
 GetOptions(\%option, 
-    'target|t=s', 
-    'help|h|?', 
+    'target|t=s',
+    'help|h|?',
     'connection-info|c=s',
     'catalyst-config|C=s',
-    'use-environment|E',
-    'user|u=s', 
-    'password|p=s', 
-    'force|f',
-    'prepare|ddl',
-    'verbose|v',
-    'deploy|d',
-    'dirty',
-    'use-moduledir',
-    'core'
+    'use-environment|E!',
+    'user|u=s',
+    'password|p=s',
+    'force|f!',
+    'prepare|ddl!',
+    'verbose|v+',
+    'deploy|d!',
+    'dirty!',
+    'use-moduledir!',
+    'core!'
 );
 
 my $module = shift;
@@ -412,7 +412,7 @@ itself uses to track versions.
     # Prepares an upgrade from the current version to 10
     # Requires source (YAML) files for version 10
     fb11-dbh MyApp::DB::Schema --target 10 prepare
-    
+
     # Requires _source/deploy/9 and _source/deploy/10 YAML files. Prepares
     # */upgrade/9-10 SQL files
     fb11-dbh MyApp::DB::Schema --target 9-10 prepare
@@ -480,7 +480,7 @@ Provide a connection string (DSN) for the database.
 
 =head2 --core
 
-With C<--deploy> and C< prepare>, prepare the deployment files for a core
+With C<--deploy> and C<prepare>, prepare the deployment files for a core
 installation. Since you're reading this, your core is probably FB11 itself, and
 we already prepared this for you, so you will probably never need this. However,
 if you make another system and use this script to deploy it, you should use this
