@@ -19,7 +19,6 @@ use List::Util qw/min/;
 
 my %option = (
     help => sub { pod2usage(verbose => 2) },
-    'use-moduledir' => 1,
 );
 GetOptions(\%option, 
     'target|t=s',
@@ -34,7 +33,6 @@ GetOptions(\%option,
     'verbose|v+',
     'deploy|d!',
     'dirty!',
-    'use-moduledir!',
     'core!'
 );
 
@@ -121,11 +119,6 @@ sub dh() {
     state $dh = OpusVL::FB11::DeploymentHandler->new({ 
         schema => schema,
         force_overwrite  => $option{force},
-      (
-      $option{'use-moduledir'} 
-      ?     (script_directory => module_dir($module) . '/sql')
-      :     ()
-      ),
         txn_wrap => !$option{dirty},
         to_version => version,
     });
@@ -562,16 +555,6 @@ Uses the environment variables C<FB11_DB_DRIVER> (C<Pg>), C<FB11_DB_USER>
 (C<fb11>), and C<FB11_DB_HOST> (C<db>) to construct the DSN. (Parens indicate
 defaults.) Then uses C<FB11_DB_USER> and C<FB11_DB_PASSWORD> to connect to that
 (no defaults).
-
-=head2 --use-moduledir
-
-=head2 --no-use-moduledir
-
-Use previous behaviour of putting SQL in lib/auto. New behaviour is to put SQL
-next to lib, not inside it.
-
-To maintain compatibility with basically everything we have, this is on by
-default.
 
 =head2 --verbose
 
