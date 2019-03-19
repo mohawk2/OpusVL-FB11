@@ -121,9 +121,10 @@ sub version () {
 
 
 sub dh() {
-    state $dh = OpusVL::FB11::DeploymentHandler->new({ 
+    state $dh = OpusVL::FB11::DeploymentHandler->new({
         schema => schema,
         force_overwrite  => $option{force},
+        script_directory => module_dir($module) . '/sql',
         txn_wrap => !$option{dirty},
         to_version => version,
     });
