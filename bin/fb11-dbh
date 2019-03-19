@@ -33,7 +33,8 @@ GetOptions(\%option,
     'verbose|v+',
     'deploy|d!',
     'dirty!',
-    'core!'
+    'core!',
+    'moduledir=s',
 );
 
 my $module = shift;
@@ -45,6 +46,10 @@ unless ($module && $command) {
         exitval => 1, 
         message => "Missing schema name or command"
     );
+}
+
+if ($option{moduledir}) {
+    $File::ShareDir::MODULE_SHARE{$module} = $option{moduledir}
 }
 
 eval "require $module" or die $@;
@@ -523,6 +528,12 @@ occurred.  This generally shouldn't be done on production machines if possible.
 
 Force overwriting of source files. Use this to redeploy the current version
 during development.
+
+=head2 --moduledir=DIR
+
+Add the given DIR to the File::ShareDir search paths. Useful for development,
+when you want to find your local files instead of the installed ones.  See
+L<File::ShareDir/Overriding Directory Resolution>.
 
 =head2 --password=PASSWORD
 
