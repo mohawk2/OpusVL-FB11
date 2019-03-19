@@ -5,6 +5,7 @@ use File::ShareDir qw/module_dir/;
 use Data::Munge qw/elem/;
 use namespace::autoclean;
 
+with 'OpusVL::FB11::RolesFor::Plugin';
 our $VERSION = '0.043';
 
 after 'setup_components' => sub {
